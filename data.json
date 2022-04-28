@@ -1,0 +1,20 @@
+[
+    {
+        "name":"Phone",
+        "model":"vivo 22x",
+        "price":"$230",
+        "quantity":10
+    },
+    {
+        "name":"laptop",
+        "model":"Macbook",
+        "price":"$1230",
+        "quantity":7
+    },
+    {
+        "name":"Head Phone",
+        "model":"Nokia 12x0",
+        "price":"$150",
+        "quantity":32
+    }
+]
