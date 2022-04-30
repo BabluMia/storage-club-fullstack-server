@@ -34,13 +34,13 @@ async function run() {
       const products = await cursor.toArray();
       res.send(products);
     });
-    // //load single data
-    // app.get("sproduct/:id", async (req, res) => {
-    //   const id = req.params.id;
-    //   const query = { _id: ObjectId(id) };
-    //   const product = await productCollection.findOne(query);
-    //   res.send(product);
-    // });
+    //load single data
+    app.get("/inventory/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const product = await productCollection.findOne(query);
+      res.send(product);
+    });
   } finally {
   }
 }
