@@ -9,8 +9,7 @@ require("dotenv").config();
 app.use(express.json());
 app.use(cors());
 
-// const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.USER_PASS}@cluster0.q72xb.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
-// const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
+
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.USER_PASS}@cluster0.37lyw.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, {
@@ -23,10 +22,15 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     await client.connect();
-    console.log('connect to db');
+    console.log("connect to db");
     // client,db = database name && collection = database collection
     const productCollection = client.db("wereHouse").collection("products");
-
+    app.post("/products", async (req, res) => {
+      const result = await productCollection.insertOne(req.body);
+      console.log(req.body);
+      res.send(result);
+      console.log(result);
+    });
     // load all data
     app.get("/products", async (req, res) => {
       const query = {};
@@ -41,21 +45,29 @@ async function run() {
       const product = await productCollection.findOne(query);
       res.send(product);
       // update data
-      
     });
-    app.put("/inventory/:id", async (req, res)=>{
+    app.post("/inventory/:id", async (req, res) => {
       const id = req.params.id;
       const data = req.body;
+      // console.log(req);
       const filter = { _id: ObjectId(id) };
-      const options = {upsert : true};
-      const updatedDoc ={
-        $set:{
-          quantity : data.quantity
-        },
-      }
-      const result = await productCollection.updateOne(filter,updatedDoc,options);
-      res.send(result)
+      // const options = {upsert : true};
+      // const updatedDoc ={
+      //   $set:{
+      //     quantity : data.quantity
+      //   },
+      // }
+      // const result = await productCollection.updateOne(filter,updatedDoc,options);
+      // res.send(result)
+      // console.log(data);
     });
+
+    // add data 
+    app.post(("/products", async (req, res) =>{
+      const product = req.body;
+      const result = await productCollection.insertOne(product);
+      res.send(result)
+    }))
   } finally {
   }
 }
