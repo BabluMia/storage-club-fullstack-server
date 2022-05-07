@@ -64,13 +64,13 @@ async function run() {
       const query = { _id: ObjectId(id) };
       const product = await productCollection.findOne(query);
       res.send(product);
-      // update data
     });
+     // update data
     app.put("/inventory/:id", async (req, res) => {
       const id = req.params.id;
       const data = req.body;
       // console.log(req);
-      console.log(data);
+      // console.log(data);
       const filter = { _id: ObjectId(id) };
       const options = { upsert: true };
       const updatedDoc = {
@@ -84,7 +84,7 @@ async function run() {
         options
       );
       res.send(result);
-      console.log(data);
+      // console.log(data);
     });
     app.delete("/inventory/:id", async (req, res) => {
       const id = req.params.id;
